@@ -18,7 +18,7 @@ public class PedidoDto {
 
 	public PedidoDto(Pedido pedido) {
 		this.id = pedido.getId();
-		this.cliente = pedido.getCliente();
+		//this.cliente = pedido.getCliente();
 		this.dataCriacao = pedido.getDataCriacao();
 		this.produtos = pedido.getProdutos();
 	}
@@ -29,13 +29,8 @@ public class PedidoDto {
 	}
 
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public Long getCliente() {
+		return cliente.getId();
 	}
 
 

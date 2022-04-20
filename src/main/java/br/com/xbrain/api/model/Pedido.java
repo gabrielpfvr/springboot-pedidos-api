@@ -11,15 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Pedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@ManyToOne
 	private Cliente cliente;
-	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@ManyToMany
 	private List<Produto> produtos = new ArrayList<Produto>();
 
@@ -31,14 +33,15 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public String getCliente() {
+		return cliente.toString();
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
+	@JsonFormat(pattern="dd-MM-yyyy - HH:mm")
 	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
