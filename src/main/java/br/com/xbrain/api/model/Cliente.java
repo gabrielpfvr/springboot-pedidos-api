@@ -1,5 +1,7 @@
 package br.com.xbrain.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6998504629768901873L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -60,8 +67,8 @@ public class Cliente {
 		this.senha = senha;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public Long getEndereco() {
+		return endereco.getId();
 	}
 
 	public void setEndereco(Endereco endereco) {

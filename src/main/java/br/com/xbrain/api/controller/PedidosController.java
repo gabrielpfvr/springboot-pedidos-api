@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.xbrain.api.model.Pedido;
 import br.com.xbrain.api.service.PedidoService;
+import br.com.xbrain.api.service.RabbitMQService;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -29,6 +30,8 @@ public class PedidosController {
 
 	@Autowired
 	private PedidoService pedidoService;
+	@Autowired
+	private RabbitMQService rabbitmqService;
 	
 
 	@GetMapping
@@ -46,6 +49,7 @@ public class PedidosController {
 	@Transactional
 	public ResponseEntity<Pedido> cadastrar(@RequestBody @Valid Pedido pedido, UriComponentsBuilder uriBuilder) {
 		pedido = pedidoService.novoPedido(pedido);
+		this.rabbitmqService.enviarMensagem("Pedidos", pedido);
 		
 		URI uri = uriBuilder.path("/pedidos/{id}").buildAndExpand(pedido.getId()).toUri();
 		return ResponseEntity.created(uri).build();
