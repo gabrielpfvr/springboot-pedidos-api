@@ -6,23 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Cliente implements Serializable {
 	
+	private static final long serialVersionUID = 6998504629768901873L;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6998504629768901873L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
 	private String senha;
-	@ManyToOne
-	private Endereco endereco;
+	
 	
 	public Cliente() {
 		
@@ -67,14 +65,6 @@ public class Cliente implements Serializable {
 		this.senha = senha;
 	}
 
-	public Long getEndereco() {
-		return endereco.getId();
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-	
 	@Override
 	public String toString() {
 		return "id: " + this.id + ", nome: " + this.nome;

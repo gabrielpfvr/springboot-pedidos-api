@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.xbrain</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>api</name>
 	<description>API REST desenvolvida como teste da primeira etapa do processo seletivo da empresa X-brain</description>
 	<properties>

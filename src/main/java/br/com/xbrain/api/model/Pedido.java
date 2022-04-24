@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Pedido implements Serializable {
 
+	
 	/**
 	 * 
 	 */
@@ -28,6 +29,8 @@ public class Pedido implements Serializable {
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@ManyToOne
 	private Cliente cliente;
+	@ManyToOne
+	private Endereco endereco;
 	@ManyToMany
 	private List<Produto> produtos = new ArrayList<Produto>();
 
@@ -40,7 +43,7 @@ public class Pedido implements Serializable {
 	}
 
 	public String getCliente() {
-		return cliente.toString() + ", endereco_id: " + cliente.getEndereco();
+		return cliente.toString();
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -54,6 +57,14 @@ public class Pedido implements Serializable {
 
 	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
+	}
+	
+	public String getEndereco() {
+		return endereco.toString();
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public List<Produto> getProdutos() {
@@ -70,6 +81,11 @@ public class Pedido implements Serializable {
 			soma = soma + p.getPreco();
 		}
 		return soma;
+	}
+	
+	@Override
+	public String toString() {
+		return "Id do pedido: " + this.id + ", endereço de entrega: " + getEndereco();
 	}
 
 }

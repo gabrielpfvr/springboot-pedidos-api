@@ -10,6 +10,7 @@ import javax.persistence.Id;
 @Entity
 public class Produto implements Serializable {
 
+	
 	/**
 	 * 
 	 */
