@@ -24,12 +24,12 @@ public class PedidoService {
 		if(pedido.isEmpty()) {
 			throw new PedidoNaoEncontradoException();
 		}
-		return pedidoRepository.findById(id);
+		return pedido;
 	}
 	 
 	public Pedido novoPedido(Pedido pedido) {
 		pedido.setId(null);
-		return pedidoRepository.save(pedido);
+		return pedidoRepository.saveAndFlush(pedido);
 	}
 	
 	public void atualizarPedido(Pedido pedido) {
@@ -41,5 +41,5 @@ public class PedidoService {
 		listarPorId(id);
 		pedidoRepository.deleteById(id);
 	}
-
+	
 }

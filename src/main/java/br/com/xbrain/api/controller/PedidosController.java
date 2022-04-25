@@ -46,12 +46,14 @@ public class PedidosController {
 	}
 	
 	@PostMapping
-	@Transactional
 	public ResponseEntity<Pedido> cadastrar(@RequestBody @Valid Pedido pedido, UriComponentsBuilder uriBuilder) {
 		pedido = pedidoService.novoPedido(pedido);
-		this.rabbitmqService.enviarMensagem("Pedidos", pedido);
 		
 		URI uri = uriBuilder.path("/pedidos/{id}").buildAndExpand(pedido.getId()).toUri();
+		
+		Optional<Pedido> pedidoOptional = pedidoService.listarPorId(pedido.getId());
+		this.rabbitmqService.enviarMensagem("Pedidos", pedidoOptional.get());
+		
 		return ResponseEntity.created(uri).build();
 	}
 	
