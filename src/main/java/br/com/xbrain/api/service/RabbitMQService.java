@@ -13,8 +13,8 @@ public class RabbitMQService {
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 	
-	public void enviarMensagem(String nomeFila, Object mensagem) {
-		this.rabbitTemplate.convertAndSend(nomeFila, mensagem);
+	public void sendMessage(String queueName, Object message) {
+		this.rabbitTemplate.convertAndSend(queueName, message);
 	}
 	
 	@RabbitListener(queues = "Pedidos")

@@ -15,11 +15,11 @@ public class PedidoService {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
-	public List<Pedido> listar() {
+	public List<Pedido> findOrders() {
 		return pedidoRepository.findAll();
 	}
 	
-	public Optional<Pedido> listarPorId(Long id) {
+	public Optional<Pedido> findById(Long id) {
 		Optional<Pedido> pedido = pedidoRepository.findById(id);
 		if(pedido.isEmpty()) {
 			throw new PedidoNaoEncontradoException();
@@ -27,18 +27,18 @@ public class PedidoService {
 		return pedido;
 	}
 	 
-	public Pedido novoPedido(Pedido pedido) {
+	public Pedido newOrder(Pedido pedido) {
 		pedido.setId(null);
 		return pedidoRepository.saveAndFlush(pedido);
 	}
 	
-	public void atualizarPedido(Pedido pedido) {
-		listarPorId(pedido.getId());
+	public void updateOrder(Pedido pedido) {
+		findById(pedido.getId());
 		pedidoRepository.save(pedido);
 	}
 	
-	public void removerPedido(Long id) {
-		listarPorId(id);
+	public void deleteOrder(Long id) {
+		findById(id);
 		pedidoRepository.deleteById(id);
 	}
 	

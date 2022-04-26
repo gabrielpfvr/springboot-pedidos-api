@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>br.com.xbrain</groupId>
 	<artifactId>api</artifactId>
-	<version>0.1.2-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>api</name>
-	<description>API REST desenvolvida como teste da primeira etapa do processo seletivo da empresa X-brain. V1.</description>
+	<description>API REST desenvolvida como teste da primeira etapa do processo seletivo da empresa X-brain.</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

@@ -35,40 +35,40 @@ public class PedidosController {
 	
 
 	@GetMapping
-	public ResponseEntity<List<Pedido>> listar() {
-		return ResponseEntity.ok().body(pedidoService.listar());
+	public ResponseEntity<List<Pedido>> read() {
+		return ResponseEntity.ok().body(pedidoService.findOrders());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Pedido>> listarPorId(@PathVariable Long id) {
-		Optional<Pedido> pedido = pedidoService.listarPorId(id);
+	public ResponseEntity<Optional<Pedido>> readById(@PathVariable Long id) {
+		Optional<Pedido> pedido = pedidoService.findById(id);
 		return ResponseEntity.ok().body(pedido);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pedido> cadastrar(@RequestBody @Valid Pedido pedido, UriComponentsBuilder uriBuilder) {
-		pedido = pedidoService.novoPedido(pedido);
+	public ResponseEntity<Pedido> create(@RequestBody @Valid Pedido pedido, UriComponentsBuilder uriBuilder) {
+		pedido = pedidoService.newOrder(pedido);
 		
 		URI uri = uriBuilder.path("/pedidos/{id}").buildAndExpand(pedido.getId()).toUri();
 		
-		Optional<Pedido> pedidoOptional = pedidoService.listarPorId(pedido.getId());
-		this.rabbitmqService.enviarMensagem("Pedidos", pedidoOptional.get());
+		Optional<Pedido> pedidoOptional = pedidoService.findById(pedido.getId());
+		this.rabbitmqService.sendMessage("Pedidos", pedidoOptional.get());
 		
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody @Valid Pedido pedido) {
+	public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Pedido pedido) {
 		pedido.setId(id);
-		pedidoService.atualizarPedido(pedido);
+		pedidoService.updateOrder(pedido);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<Void> remover(@PathVariable Long id) {
-		pedidoService.removerPedido(id);
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		pedidoService.deleteOrder(id);
 		return ResponseEntity.ok().build();
 	}
 

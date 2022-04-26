@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RabbitMQConnection {
 	
-	private static final String NOME_EXCHANGE = "amq.direct";
+	private static final String EXCHANGE_NAME = "amq.direct";
 	
 	private AmqpAdmin amqpAdmin;
 	
@@ -19,30 +19,31 @@ public class RabbitMQConnection {
 		this.amqpAdmin = amqpAdmin;
 	}
 	
-	private Queue fila(String nomeFila) {
-		//nomeFila, durable, exclusive, autoDelete
-		return new Queue(nomeFila, true, false, false);
+	private Queue queue(String queueName) {
+		//queueName, durable, exclusive, autoDelete
+		return new Queue(queueName, true, false, false);
 	}
 	
 	private DirectExchange exchange() {
-		return new DirectExchange(NOME_EXCHANGE);
+		return new DirectExchange(EXCHANGE_NAME);
 	}
 	
-	private Binding relacionamento (Queue fila, DirectExchange exchange) {
-		return new Binding(fila.getName(), Binding.DestinationType.QUEUE, exchange.getName(), fila.getName(), null);
+	private Binding binding (Queue queue, DirectExchange exchange) {
+		return new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchange.getName(), queue.getName(), null);
 	}
 	
 	@PostConstruct
-	private void adiciona() {
-		Queue filaPedidos = this.fila("Pedidos");
+	private void createQueue() {
 		
-		DirectExchange troca = this.exchange();
+		Queue ordersQueue = this.queue("Pedidos");
 		
-		Binding ligacaoPedidos = this.relacionamento(filaPedidos, troca);
+		DirectExchange exchange = this.exchange();
 		
-		this.amqpAdmin.declareQueue(filaPedidos);
-		this.amqpAdmin.declareExchange(troca);
-		this.amqpAdmin.declareBinding(ligacaoPedidos);
+		Binding ordersBinding = this.binding(ordersQueue, exchange);
+		
+		this.amqpAdmin.declareQueue(ordersQueue);
+		this.amqpAdmin.declareExchange(exchange);
+		this.amqpAdmin.declareBinding(ordersBinding);
 		
 		
 	}
