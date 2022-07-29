@@ -12,9 +12,9 @@
 	<artifactId>api</artifactId>
 	<version>1.0.0</version>
 	<name>api</name>
-	<description>API REST desenvolvida como teste da primeira etapa do processo seletivo da empresa X-brain.</description>
+	<description>API REST com CRUD de pedido e produtos.</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -58,6 +58,13 @@
    			<groupId>org.springframework.amqp</groupId>
    			<artifactId>spring-rabbit-test</artifactId>
    			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
 		</dependency>
 		
 	</dependencies>
