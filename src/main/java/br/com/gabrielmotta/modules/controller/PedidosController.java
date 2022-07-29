@@ -1,4 +1,4 @@
-package br.com.xbrain.api.controller;
+package br.com.gabrielmotta.modules.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.xbrain.api.model.Pedido;
-import br.com.xbrain.api.service.PedidoService;
-import br.com.xbrain.api.service.RabbitMQService;
+import br.com.gabrielmotta.modules.model.Pedido;
+import br.com.gabrielmotta.modules.service.PedidoService;
+import br.com.gabrielmotta.modules.service.RabbitMQService;
 
 @RestController
 @RequestMapping("/pedidos")

@@ -1,4 +1,4 @@
-package br.com.xbrain.api.handler;
+package br.com.gabrielmotta.config.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import br.com.xbrain.api.model.DetalhesErro;
-import br.com.xbrain.api.service.PedidoNaoEncontradoException;
 
 @RestControllerAdvice
 public class PedidoExceptionHandler {
@@ -25,5 +22,4 @@ public class PedidoExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
-
 }

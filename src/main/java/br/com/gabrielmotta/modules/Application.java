@@ -1,4 +1,4 @@
-package br.com.xbrain.api;
+package br.com.gabrielmotta.modules;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;

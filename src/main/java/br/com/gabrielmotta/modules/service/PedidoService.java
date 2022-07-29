@@ -1,13 +1,14 @@
-package br.com.xbrain.api.service;
+package br.com.gabrielmotta.modules.service;
 
 import java.util.List;
 import java.util.Optional;
 
+import br.com.gabrielmotta.modules.repository.PedidoRepository;
+import br.com.gabrielmotta.config.handler.PedidoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.xbrain.api.model.Pedido;
-import br.com.xbrain.api.repository.PedidoRepository;
+import br.com.gabrielmotta.modules.model.Pedido;
 
 @Service
 public class PedidoService {
@@ -19,7 +20,7 @@ public class PedidoService {
 		return pedidoRepository.findAll();
 	}
 	
-	public Optional<Pedido> findById(Long id) {
+	public Optional<Pedido> findById(Integer id) {
 		Optional<Pedido> pedido = pedidoRepository.findById(id);
 		if(pedido.isEmpty()) {
 			throw new PedidoNaoEncontradoException();
@@ -37,7 +38,7 @@ public class PedidoService {
 		pedidoRepository.save(pedido);
 	}
 	
-	public void deleteOrder(Long id) {
+	public void deleteOrder(Integer id) {
 		findById(id);
 		pedidoRepository.deleteById(id);
 	}
