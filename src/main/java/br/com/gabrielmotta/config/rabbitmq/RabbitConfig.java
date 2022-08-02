@@ -1,4 +1,4 @@
-package br.com.xbrain.api.queue;
+package br.com.gabrielmotta.config.rabbitmq;
 
 import javax.annotation.PostConstruct;
 
@@ -9,19 +9,19 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RabbitMQConnection {
+public class RabbitConfig {
 	
 	private static final String EXCHANGE_NAME = "amq.direct";
+	private static final String QUEUE_NAME = "pedidos";
 	
 	private AmqpAdmin amqpAdmin;
 	
-	public RabbitMQConnection(AmqpAdmin amqpAdmin) {
+	public RabbitConfig(AmqpAdmin amqpAdmin) {
 		this.amqpAdmin = amqpAdmin;
 	}
 	
-	private Queue queue(String queueName) {
-		//queueName, durable, exclusive, autoDelete
-		return new Queue(queueName, true, false, false);
+	private Queue queue() {
+		return new Queue(QUEUE_NAME, true, false, false);
 	}
 	
 	private DirectExchange exchange() {
@@ -29,22 +29,18 @@ public class RabbitMQConnection {
 	}
 	
 	private Binding binding (Queue queue, DirectExchange exchange) {
-		return new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchange.getName(), queue.getName(), null);
+		return new Binding(queue.getName(),
+				Binding.DestinationType.QUEUE, exchange.getName(), queue.getName(), null);
 	}
 	
 	@PostConstruct
 	private void createQueue() {
-		
-		Queue ordersQueue = this.queue("Pedidos");
-		
-		DirectExchange exchange = this.exchange();
-		
-		Binding ordersBinding = this.binding(ordersQueue, exchange);
+		var ordersQueue = this.queue();
+		var exchange = this.exchange();
+		var ordersBinding = this.binding(ordersQueue, exchange);
 		
 		this.amqpAdmin.declareQueue(ordersQueue);
 		this.amqpAdmin.declareExchange(exchange);
 		this.amqpAdmin.declareBinding(ordersBinding);
-		
-		
 	}
 }

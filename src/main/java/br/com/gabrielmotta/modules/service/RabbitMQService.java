@@ -1,11 +1,11 @@
-package br.com.xbrain.api.service;
+package br.com.gabrielmotta.modules.service;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.xbrain.api.model.Pedido;
+import br.com.gabrielmotta.modules.model.Pedido;
 
 @Service
 public class RabbitMQService {
