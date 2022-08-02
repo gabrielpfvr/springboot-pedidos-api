@@ -1,9 +1,8 @@
 package br.com.gabrielmotta.modules.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import br.com.gabrielmotta.modules.dto.ClienteRequest;
+import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 
@@ -14,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @ToString
 @EqualsAndHashCode(of = "id", callSuper = false)
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "CLIENTE")
 public class Cliente implements Serializable {
@@ -22,7 +23,7 @@ public class Cliente implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
 	@NotBlank
 	@Column(name = "NOME")
@@ -38,4 +39,14 @@ public class Cliente implements Serializable {
 
 	@Embedded
 	private Endereco endereco;
+
+	public Cliente(Integer id) {
+		this.id = id;
+	}
+
+	public static Cliente of(ClienteRequest request) {
+		var cliente = new Cliente();
+		BeanUtils.copyProperties(request, cliente);
+		return cliente;
+	}
 }

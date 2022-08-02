@@ -6,17 +6,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PedidoRequest {
+public class EnderecoRequest {
 
-    @NotNull
-    private Integer clienteId;
     @NotEmpty
-    private List<Integer> produtosIds;
+    private String logradouro;
+    @NotEmpty
+    private String numero;
+    @NotEmpty
+    private String cep;
+    @NotEmpty
+    private String bairro;
+    @NotEmpty
+    private String cidade;
+    @NotEmpty
+    private String estado;
 }

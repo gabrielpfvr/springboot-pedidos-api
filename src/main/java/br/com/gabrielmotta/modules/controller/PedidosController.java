@@ -1,75 +1,48 @@
 package br.com.gabrielmotta.modules.controller;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import br.com.gabrielmotta.modules.model.Pedido;
+import br.com.gabrielmotta.modules.dto.PedidoRequest;
+import br.com.gabrielmotta.modules.dto.PedidoResponse;
 import br.com.gabrielmotta.modules.service.PedidoService;
 import br.com.gabrielmotta.modules.service.RabbitMQService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pedidos")
 public class PedidosController {
-	
 
 	@Autowired
-	private PedidoService pedidoService;
+	private PedidoService service;
 	@Autowired
 	private RabbitMQService rabbitmqService;
-	
 
 	@GetMapping
-	public ResponseEntity<List<Pedido>> read() {
-		return ResponseEntity.ok().body(pedidoService.findOrders());
+	public ResponseEntity<List<PedidoResponse>> getAll() {
+		return ResponseEntity.ok().body(service.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Pedido>> readById(@PathVariable Long id) {
-		Optional<Pedido> pedido = pedidoService.findById(id);
-		return ResponseEntity.ok().body(pedido);
+	public PedidoResponse findById(@PathVariable Integer id) {
+		return service.detalhar(id);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pedido> create(@RequestBody @Valid Pedido pedido, UriComponentsBuilder uriBuilder) {
-		pedido = pedidoService.newOrder(pedido);
-		
-		URI uri = uriBuilder.path("/pedidos/{id}").buildAndExpand(pedido.getId()).toUri();
-		
-		Optional<Pedido> pedidoOptional = pedidoService.findById(pedido.getId());
-		this.rabbitmqService.sendMessage("Pedidos", pedidoOptional.get());
-		
-		return ResponseEntity.created(uri).build();
+	public void create(@RequestBody @Validated PedidoRequest request) {
+		service.create(request);
 	}
 	
 	@PutMapping("/{id}")
-	@Transactional
-	public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Pedido pedido) {
-		pedido.setId(id);
-		pedidoService.updateOrder(pedido);
-		return ResponseEntity.ok().build();
+	public void update(@PathVariable Integer id, @RequestBody @Validated PedidoRequest request) {
+		service.update(id, request);
 	}
 	
 	@DeleteMapping("/{id}")
-	@Transactional
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		pedidoService.deleteOrder(id);
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
-
 }

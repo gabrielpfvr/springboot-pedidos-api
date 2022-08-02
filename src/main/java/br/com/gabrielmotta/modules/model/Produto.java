@@ -1,9 +1,8 @@
 package br.com.gabrielmotta.modules.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import br.com.gabrielmotta.modules.dto.ProdutoRequest;
+import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 
@@ -16,6 +15,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @EqualsAndHashCode(of = "id", callSuper = false)
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "PRODUTO")
 public class Produto implements Serializable {
@@ -24,7 +25,7 @@ public class Produto implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
 	@NotBlank
 	@Column(name = "NOME")
@@ -34,4 +35,14 @@ public class Produto implements Serializable {
 	@Min(value = 0)
 	@Column(name = "PRECO")
 	private Double preco;
+
+	public Produto(Integer id) {
+		this.id = id;
+	}
+
+	public Produto of(ProdutoRequest request) {
+		var produto = new Produto();
+		BeanUtils.copyProperties(request, produto);
+		return produto;
+	}
 }
