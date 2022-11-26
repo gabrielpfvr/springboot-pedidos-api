@@ -7,3 +7,4 @@ INSERT INTO PRODUTO(nome, preco) VALUES ('Headset wireless', '700');
 INSERT INTO PRODUTO(nome, preco) VALUES ('Teclado mecânico', '500');
 INSERT INTO PRODUTO(nome, preco) VALUES ('Air Fryer', '400');
 INSERT INTO PRODUTO(nome, preco) VALUES ('Webcam 1080p', '650');
+INSERT INTO PRODUTO(nome, preco) VALUES ('Fender Stratocaster', '2500');

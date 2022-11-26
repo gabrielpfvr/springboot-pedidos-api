@@ -14,7 +14,7 @@ public class RabbitConfig {
 	private static final String EXCHANGE_NAME = "amq.direct";
 	private static final String QUEUE_NAME = "pedidos";
 	
-	private AmqpAdmin amqpAdmin;
+	private final AmqpAdmin amqpAdmin;
 	
 	public RabbitConfig(AmqpAdmin amqpAdmin) {
 		this.amqpAdmin = amqpAdmin;
