@@ -31,14 +31,14 @@ public class Cliente {
 	private String cpf;
 
 	@NotBlank
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", nullable = false)
 	private String email;
 
 	@NotBlank
 	@Column(name = "TELEFONE")
 	private String telefone;
 
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private List<Endereco> enderecosEntrega;
 
