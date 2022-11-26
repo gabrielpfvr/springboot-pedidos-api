@@ -1,28 +1,8 @@
 package br.com.gabrielmotta.modules.cliente.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-
-@Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class EnderecoRequest {
-
-    @NotEmpty
-    private String logradouro;
-    @NotEmpty
-    private String numero;
-    @NotEmpty
-    private String cep;
-    @NotEmpty
-    private String bairro;
-    @NotEmpty
-    private String cidade;
-    @NotEmpty
-    private String estado;
+public record EnderecoRequest(String estado, String cidade, String logradouro, Integer numero, String complemento,
+                              String cep, String bairro, String referencia) {
 }

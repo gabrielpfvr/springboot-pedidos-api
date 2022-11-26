@@ -1,24 +1,20 @@
 package br.com.gabrielmotta.modules.cliente.dto;
 
 import br.com.gabrielmotta.modules.cliente.model.Cliente;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class ClienteResponse {
-
-    private String nome;
-    private EnderecoResponse endereco;
+public record ClienteResponse(String nome, String cpf, String email, String telefone, List<EnderecoResponse> enderecosEntrega) {
 
     public static ClienteResponse of(Cliente cliente) {
-        return ClienteResponse.builder()
-                .nome(cliente.getNome())
-                .endereco(EnderecoResponse.of(cliente.getEndereco()))
-                .build();
+        return new ClienteResponse(
+                cliente.getNome(),
+                cliente.getCpf(),
+                cliente.getEmail(),
+                cliente.getTelefone(),
+                EnderecoResponse.of(cliente.getEnderecosEntrega())
+        );
     }
 }

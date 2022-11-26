@@ -1,11 +1,9 @@
 package br.com.gabrielmotta.modules.produto.dto;
 
 import br.com.gabrielmotta.modules.produto.model.Produto;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 

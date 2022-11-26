@@ -1,27 +1,10 @@
 package br.com.gabrielmotta.modules.cliente.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class ClienteRequest {
-
-    @NotEmpty
-    private String nome;
-    @NotEmpty
-    private String email;
-    @NotEmpty
-    private String telefone;
-    @NotNull
-    @Valid
-    private EnderecoRequest endereco;
+public record ClienteRequest(String nome, String cpf, String email, String telefone,
+                             List<EnderecoRequest> enderecosEntregaRequest) {
 }

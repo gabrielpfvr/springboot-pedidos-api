@@ -1,26 +1,35 @@
 package br.com.gabrielmotta.modules.cliente.dto;
 
 import br.com.gabrielmotta.modules.cliente.model.Endereco;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
-@Data
+import java.util.Collections;
+import java.util.List;
+
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class EnderecoResponse {
-
-    private String logradouro;
-    private String numero;
-    private String cidade;
-    private String estado;
+public record EnderecoResponse(String estado, String cidade, String logradouro, Integer numero, String complemento,
+                               String cep, String bairro, String referencia) {
 
     public static EnderecoResponse of(Endereco endereco) {
-        var response = new EnderecoResponse();
-        BeanUtils.copyProperties(endereco, response);
-        return response;
+        return new EnderecoResponse(
+                endereco.getEstado(),
+                endereco.getCidade(),
+                endereco.getLogradouro(),
+                endereco.getNumero(),
+                endereco.getComplemento(),
+                endereco.getCep(),
+                endereco.getBairro(),
+                endereco.getReferencia()
+        );
+    }
+
+    public static List<EnderecoResponse> of(List<Endereco> endereco) {
+        return !isEmpty(endereco)
+                ? endereco.stream()
+                    .map(EnderecoResponse::of)
+                    .toList()
+                : Collections.emptyList();
     }
 }

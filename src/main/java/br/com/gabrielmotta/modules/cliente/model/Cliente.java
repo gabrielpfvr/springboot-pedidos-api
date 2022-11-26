@@ -5,22 +5,18 @@ import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(of = "id", callSuper = false)
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "CLIENTE")
-public class Cliente implements Serializable {
-	
-	private static final long serialVersionUID = 6998504629768901873L;
-	
+public class Cliente {
+
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +27,10 @@ public class Cliente implements Serializable {
 	private String nome;
 
 	@NotBlank
+	@Column(name = "CPF")
+	private String cpf;
+
+	@NotBlank
 	@Column(name = "EMAIL")
 	private String email;
 
@@ -38,8 +38,9 @@ public class Cliente implements Serializable {
 	@Column(name = "TELEFONE")
 	private String telefone;
 
-	@Embedded
-	private Endereco endereco;
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	@ToString.Exclude
+	private List<Endereco> enderecosEntrega;
 
 	public Cliente(Integer id) {
 		this.id = id;
@@ -48,6 +49,7 @@ public class Cliente implements Serializable {
 	public static Cliente of(ClienteRequest request) {
 		var cliente = new Cliente();
 		BeanUtils.copyProperties(request, cliente);
+		cliente.setEnderecosEntrega(Endereco.of(request.enderecosEntregaRequest()));
 		return cliente;
 	}
 }
