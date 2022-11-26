@@ -57,10 +57,10 @@ public class ClienteService {
     public void adicionarEndereco(Integer id, EnderecoRequest enderecoRequest) {
         var cliente = findById(id);
         var enderecos = cliente.getEnderecosEntrega();
-        var enderecos2 = Endereco.of(enderecoRequest);
+        var enderecosNovos = Endereco.of(enderecoRequest);
         if (!enderecos.isEmpty()) {
-            enderecos.add(enderecos2);
-            enderecos2.setCliente(cliente);
+            enderecos.add(enderecosNovos);
+            enderecosNovos.setCliente(cliente);
         }
     }
 

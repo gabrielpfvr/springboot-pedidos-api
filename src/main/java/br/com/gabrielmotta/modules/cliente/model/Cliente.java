@@ -1,14 +1,15 @@
 package br.com.gabrielmotta.modules.cliente.model;
 
 import br.com.gabrielmotta.modules.cliente.dto.ClienteRequest;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.beans.BeanUtils;
-
-import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
