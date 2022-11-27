@@ -7,15 +7,18 @@ Ao gerar um novo pedido, a API envia o mesmo para uma fila de mensagens do Rabbi
 Modelo de requisição:
 ```
 {
-"clienteId" : 1,
-"produtosIds" : [1, 2]
+   "produtosIds": [1, 2, 3],
+   "clienteId": 1,
+   "enderecoEntregaId": 1
 }
 ```
+A documentação completa pode ser encontrada acessando o Swagger da aplicação:\
+http://localhost:8080/swagger-ui/index.html
 
 
 Próximos passos (TODO):
 - Implementar testes unitários;
-- Criação de endpoints para cadastro de clientes e produtos;
+- ~~Criação de endpoints para cadastro de clientes e produtos~~;
 - Implementar MySQL como banco de dados e tratar exceções;
-- Adicionar Swagger, Actuator e autenticação com Spring Security;
+- Adicionar ~~Swagger~~, Actuator e autenticação com Spring Security;
 - Criação de um microsserviço para receber os pedidos enviados pelo RabbitMQ e salvar em uma tabela de enregas.
