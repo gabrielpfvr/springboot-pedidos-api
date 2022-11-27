@@ -1,37 +1,47 @@
 package br.com.gabrielmotta.modules.pedido.dto;
 
-import br.com.gabrielmotta.modules.cliente.dto.ClienteResponse;
+import br.com.gabrielmotta.modules.cliente.dto.ClientePedidoResponse;
+import br.com.gabrielmotta.modules.cliente.dto.EnderecoResponse;
+import br.com.gabrielmotta.modules.pedido.enums.EStatusPedido;
 import br.com.gabrielmotta.modules.pedido.model.Pedido;
 import br.com.gabrielmotta.modules.produto.dto.ProdutoResponse;
-import lombok.AllArgsConstructor;
+import br.com.gabrielmotta.modules.produto.model.Produto;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class PedidoResponse {
+import static org.springframework.util.CollectionUtils.isEmpty;
 
-    private Integer id;
-    private LocalDateTime dataCriacao;
-    private ClienteResponse cliente;
-    private List<ProdutoResponse> produtos;
+@Builder
+public record PedidoResponse(Integer id, LocalDateTime dataCriacao, ClientePedidoResponse cliente, List<ProdutoResponse> produtos,
+                             EnderecoResponse enderecoEntrega, EStatusPedido status, Double valorTotal) {
 
     public static PedidoResponse of(Pedido pedido) {
-        return PedidoResponse.builder()
-                .id(pedido.getId())
-                .dataCriacao(pedido.getDataCriacao())
-                .cliente(ClienteResponse.of(pedido.getCliente()))
-                .produtos(pedido.getProdutos()
-                        .stream()
-                        .map(ProdutoResponse::of)
-                        .collect(Collectors.toList()))
-                .build();
+        return new PedidoResponse(
+                pedido.getId(),
+                pedido.getDataCriacao(),
+                ClientePedidoResponse.of(pedido.getCliente()),
+                pedido.getProdutos()
+                    .stream()
+                    .map(ProdutoResponse::of)
+                    .collect(Collectors.toList()),
+                pedido.getEnderecoEntrega(),
+                pedido.getStatusPedido(),
+                pedido.getProdutos()
+                    .stream()
+                    .mapToDouble(Produto::getPreco)
+                    .sum()
+        );
+    }
+
+    public static List<PedidoResponse> of(List<Pedido> pedidos) {
+        return !isEmpty(pedidos)
+                ? pedidos.stream()
+                    .map(PedidoResponse::of)
+                    .toList()
+                : Collections.emptyList();
     }
 }
