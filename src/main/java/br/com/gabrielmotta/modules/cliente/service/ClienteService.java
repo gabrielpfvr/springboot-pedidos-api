@@ -6,6 +6,7 @@ import br.com.gabrielmotta.modules.cliente.dto.EnderecoRequest;
 import br.com.gabrielmotta.modules.cliente.model.Cliente;
 import br.com.gabrielmotta.modules.cliente.model.Endereco;
 import br.com.gabrielmotta.modules.cliente.repository.ClienteRepository;
+import br.com.gabrielmotta.modules.cliente.repository.EnderecoRepository;
 import br.com.gabrielmotta.modules.comum.exception.NotFoundException;
 import br.com.gabrielmotta.modules.comum.exception.ValidationException;
 import org.springframework.beans.BeanUtils;
@@ -24,15 +25,17 @@ public class ClienteService {
     private static final NotFoundException CLIENTE_NAO_ENCONTRADO = new NotFoundException("Cliente não encontrado!");
 
     @Autowired
-    private ClienteRepository repository;
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public void save(ClienteRequest request) {
         validarCpfExistente(request);
-        repository.save(Cliente.of(request));
+        clienteRepository.save(Cliente.of(request));
     }
 
     public List<ClienteResponse> getAll() {
-        return ClienteResponse.of(repository.findAll());
+        return ClienteResponse.of(clienteRepository.findAll());
     }
 
     public ClienteResponse getById(Integer id) {
@@ -47,29 +50,24 @@ public class ClienteService {
 
     public void delete(Integer id) {
         try {
-            repository.deleteById(id);
+            clienteRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {
             throw CLIENTE_NAO_ENCONTRADO;
         }
     }
 
-    @Transactional
     public void adicionarEndereco(Integer id, EnderecoRequest enderecoRequest) {
-        var cliente = findById(id);
-        var enderecos = cliente.getEnderecosEntrega();
-        var enderecosNovos = Endereco.of(enderecoRequest);
-        if (!enderecos.isEmpty()) {
-            enderecos.add(enderecosNovos);
-            enderecosNovos.setCliente(cliente);
-        }
+        var endereco = Endereco.of(enderecoRequest);
+        endereco.setCliente(findById(id));
+        enderecoRepository.save(endereco);
     }
 
     private Cliente findById(Integer id) {
-        return repository.findById(id).orElseThrow(() -> CLIENTE_NAO_ENCONTRADO);
+        return clienteRepository.findById(id).orElseThrow(() -> CLIENTE_NAO_ENCONTRADO);
     }
 
     private void validarCpfExistente(ClienteRequest request) {
-        if (repository.existsByCpf(request.cpf())) {
+        if (clienteRepository.existsByCpf(request.cpf())) {
             throw CPF_JA_CADASTRADO;
         }
     }
