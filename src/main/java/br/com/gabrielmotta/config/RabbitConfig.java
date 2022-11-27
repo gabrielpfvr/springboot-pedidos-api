@@ -1,4 +1,4 @@
-package br.com.gabrielmotta.config.rabbitmq;
+package br.com.gabrielmotta.config;
 
 import javax.annotation.PostConstruct;
 
