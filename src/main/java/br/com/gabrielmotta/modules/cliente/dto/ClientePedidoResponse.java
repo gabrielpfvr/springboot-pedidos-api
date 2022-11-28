@@ -22,8 +22,8 @@ public record ClientePedidoResponse(Integer id, String nome, String cpf, String 
     public static List<ClientePedidoResponse> of(List<Cliente> cliente) {
         return !isEmpty(cliente)
                 ? cliente.stream()
-                .map(ClientePedidoResponse::of)
-                .toList()
+                    .map(ClientePedidoResponse::of)
+                    .toList()
                 : Collections.emptyList();
     }
 }

@@ -2,6 +2,7 @@ package br.com.gabrielmotta.modules.cliente.model;
 
 import br.com.gabrielmotta.modules.cliente.dto.EnderecoRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
