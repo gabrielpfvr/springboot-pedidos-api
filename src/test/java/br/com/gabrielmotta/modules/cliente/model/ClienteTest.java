@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static br.com.gabrielmotta.modules.cliente.helper.ClienteHelper.clienteRequest;
+import static br.com.gabrielmotta.modules.helper.ClienteHelper.clienteRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClienteTest {
+class ClienteTest {
 
     @Test
-    public void of_retornarCliente_aPartirDeRequest() {
+    void of_retornarCliente_aPartirDeRequest() {
         assertThat(Cliente.of(clienteRequest()))
             .extracting("nome", "cpf", "email", "telefone", "enderecosEntrega")
             .containsExactly(

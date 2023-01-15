@@ -1,4 +1,4 @@
-package br.com.gabrielmotta.modules.cliente.helper;
+package br.com.gabrielmotta.modules.helper;
 
 import br.com.gabrielmotta.modules.cliente.dto.ClienteRequest;
 import br.com.gabrielmotta.modules.cliente.dto.EnderecoRequest;
