@@ -20,40 +20,42 @@ import java.util.Objects;
 @Table(name = "PRODUTO")
 public class Produto {
 
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@NotBlank
-	@Column(name = "NOME")
-	private String descricao;
+    @NotBlank
+    @Column(name = "NOME")
+    private String descricao;
 
-	@NotNull
-	@Min(value = 0)
-	@Column(name = "PRECO")
-	private Double preco;
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "PRECO")
+    private Double preco;
 
-	public Produto(Integer id) {
-		this.id = id;
-	}
+    public Produto(Integer id) {
+        this.id = id;
+    }
 
-	public static Produto of(ProdutoRequest request) {
-		var produto = new Produto();
-		BeanUtils.copyProperties(request, produto);
-		return produto;
-	}
+    public static Produto of(ProdutoRequest request) {
+        var produto = new Produto();
+        BeanUtils.copyProperties(request, produto);
+        return produto;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null || Hibernate.getClass(this) != Hibernate.getClass(obj)) { return false; }
-		var produto = (Produto) obj;
-		return id != null && Objects.equals(id, produto.id);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) { return true; }
+        if (obj == null || Hibernate.getClass(this) != Hibernate.getClass(obj)) {
+            return false;
+        }
+        var produto = (Produto) obj;
+        return id != null && Objects.equals(id, produto.id);
+    }
 
-	@Override
-	public int hashCode() {
-		return getClass().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

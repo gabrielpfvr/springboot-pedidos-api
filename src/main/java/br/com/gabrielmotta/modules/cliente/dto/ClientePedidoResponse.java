@@ -11,19 +11,19 @@ public record ClientePedidoResponse(Integer id, String nome, String cpf, String 
 
     public static ClientePedidoResponse of(Cliente cliente) {
         return new ClientePedidoResponse(
-                cliente.getId(),
-                cliente.getNome(),
-                cliente.getCpf(),
-                cliente.getEmail(),
-                cliente.getTelefone()
+            cliente.getId(),
+            cliente.getNome(),
+            cliente.getCpf(),
+            cliente.getEmail(),
+            cliente.getTelefone()
         );
     }
 
     public static List<ClientePedidoResponse> of(List<Cliente> cliente) {
         return !isEmpty(cliente)
-                ? cliente.stream()
-                    .map(ClientePedidoResponse::of)
-                    .toList()
-                : Collections.emptyList();
+            ? cliente.stream()
+            .map(ClientePedidoResponse::of)
+            .toList()
+            : Collections.emptyList();
     }
 }

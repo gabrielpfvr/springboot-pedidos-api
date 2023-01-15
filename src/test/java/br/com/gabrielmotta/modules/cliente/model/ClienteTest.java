@@ -12,21 +12,21 @@ public class ClienteTest {
     @Test
     public void of_retornarCliente_aPartirDeRequest() {
         assertThat(Cliente.of(clienteRequest()))
-                .extracting("nome", "cpf", "email", "telefone", "enderecosEntrega")
-                .containsExactly(
-                        "Gabriel",
-                        "12345678900",
-                        "gabriel@teste.com",
-                        "43988776655",
-                        List.of(Endereco.builder()
-                            .estado("PR")
-                            .cidade("Londrina")
-                            .logradouro("Avenida Higienopolis")
-                            .numero(1000)
-                            .bairro("Centro")
-                            .cep("12345678")
-                            .build()
-                        )
-                );
+            .extracting("nome", "cpf", "email", "telefone", "enderecosEntrega")
+            .containsExactly(
+                "Gabriel",
+                "12345678900",
+                "gabriel@teste.com",
+                "43988776655",
+                List.of(Endereco.builder()
+                    .estado("PR")
+                    .cidade("Londrina")
+                    .logradouro("Avenida Higienopolis")
+                    .numero(1000)
+                    .bairro("Centro")
+                    .cep("12345678")
+                    .build()
+                )
+            );
     }
 }

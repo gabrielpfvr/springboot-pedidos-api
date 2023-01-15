@@ -1,6 +1,5 @@
 package br.com.gabrielmotta.modules.cliente.model;
 
-import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

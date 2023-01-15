@@ -16,32 +16,33 @@ import java.util.stream.Collectors;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Builder
-public record PedidoResponse(Integer id, LocalDateTime dataCriacao, ClientePedidoResponse cliente, List<ProdutoResponse> produtos,
+public record PedidoResponse(Integer id, LocalDateTime dataCriacao, ClientePedidoResponse cliente,
+                             List<ProdutoResponse> produtos,
                              EnderecoResponse enderecoEntrega, EStatusPedido status, Double valorTotal) {
 
     public static PedidoResponse of(Pedido pedido) {
         return new PedidoResponse(
-                pedido.getId(),
-                pedido.getDataCriacao(),
-                ClientePedidoResponse.of(pedido.getCliente()),
-                pedido.getProdutos()
-                    .stream()
-                    .map(ProdutoResponse::of)
-                    .collect(Collectors.toList()),
-                pedido.getEnderecoEntrega(),
-                pedido.getStatusPedido(),
-                pedido.getProdutos()
-                    .stream()
-                    .mapToDouble(Produto::getPreco)
-                    .sum()
+            pedido.getId(),
+            pedido.getDataCriacao(),
+            ClientePedidoResponse.of(pedido.getCliente()),
+            pedido.getProdutos()
+                .stream()
+                .map(ProdutoResponse::of)
+                .collect(Collectors.toList()),
+            pedido.getEnderecoEntrega(),
+            pedido.getStatusPedido(),
+            pedido.getProdutos()
+                .stream()
+                .mapToDouble(Produto::getPreco)
+                .sum()
         );
     }
 
     public static List<PedidoResponse> of(List<Pedido> pedidos) {
         return !isEmpty(pedidos)
-                ? pedidos.stream()
-                    .map(PedidoResponse::of)
-                    .toList()
-                : Collections.emptyList();
+            ? pedidos.stream()
+            .map(PedidoResponse::of)
+            .toList()
+            : Collections.emptyList();
     }
 }

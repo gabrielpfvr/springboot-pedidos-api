@@ -17,8 +17,6 @@ import java.util.List;
 @Service
 public class ProdutoService {
 
-    private static final ValidationException PRODUTO_JA_EXISTENTE =
-            new ValidationException("Produto já existente com esse nome!");
     private static final NotFoundException PRODUTO_NAO_ENCONTRADO = new NotFoundException("Produto não encontrado!");
 
     @Autowired
@@ -57,7 +55,7 @@ public class ProdutoService {
 
     private void validarProdutoExistente(ProdutoRequest request) {
         if (repository.existsByDescricaoIgnoreCase(request.descricao())) {
-            throw PRODUTO_JA_EXISTENTE;
+            throw new ValidationException("Produto já existente com esse nome!");
         }
     }
 }

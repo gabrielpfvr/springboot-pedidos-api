@@ -31,17 +31,17 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
-                .group(ADMIN_GROUP)
-                .pathsToMatch(PATHS_ADMIN_GROUP)
-                .build();
+            .group(ADMIN_GROUP)
+            .pathsToMatch(PATHS_ADMIN_GROUP)
+            .build();
     }
 
     @Bean
     public OpenAPI springShopOpenApi() {
         return new OpenAPI()
-                .info(new Info().title(nome)
-                        .description(DESCRICAO)
-                        .version(versao)
-                        .license(new License().url(URL)));
+            .info(new Info().title(nome)
+                .description(DESCRICAO)
+                .version(versao)
+                .license(new License().url(URL)));
     }
 }

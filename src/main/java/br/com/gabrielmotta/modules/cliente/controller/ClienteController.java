@@ -38,7 +38,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("{id}")
-    public void deleve(@PathVariable Integer id){
+    public void deleve(@PathVariable Integer id) {
         service.delete(id);
     }
 
