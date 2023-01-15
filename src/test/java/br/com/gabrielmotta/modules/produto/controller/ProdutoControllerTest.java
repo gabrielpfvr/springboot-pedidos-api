@@ -131,6 +131,28 @@ class ProdutoControllerTest {
         verify(service, never()).update(1, ProdutoRequest.builder().build());
     }
 
+    @Test
+    @SneakyThrows
+    void delete_ok_seProdutoExiste() {
+        mvc.perform(delete(URL + "/{id}", 1))
+            .andExpect(status().isOk());
+
+        verify(service).delete(1);
+    }
+
+    @Test
+    @SneakyThrows
+    void delete_notFound_seProdutoNaoExiste() {
+        doThrow(new NotFoundException("Produto não encontrado!"))
+            .when(service).delete(1);
+
+        mvc.perform(delete(URL + "/{id}", 1))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string("{\"message\":\"Produto nÃ£o encontrado!\",\"field\":null}"));
+
+        verify(service).delete(1);
+    }
+
     private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
         var mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
