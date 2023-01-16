@@ -1,6 +1,7 @@
 package br.com.gabrielmotta.modules.cliente.model;
 
 import br.com.gabrielmotta.modules.cliente.dto.EnderecoRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -59,6 +60,7 @@ public class Endereco {
     private String referencia;
 
     @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "FK_CLIENTE", referencedColumnName = "ID",

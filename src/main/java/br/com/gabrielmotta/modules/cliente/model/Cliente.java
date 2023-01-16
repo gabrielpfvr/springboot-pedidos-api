@@ -1,17 +1,19 @@
 package br.com.gabrielmotta.modules.cliente.model;
 
 import br.com.gabrielmotta.modules.cliente.dto.ClienteRequest;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -52,5 +54,18 @@ public class Cliente {
         BeanUtils.copyProperties(request, cliente);
         cliente.setEnderecosEntrega(Endereco.of(request.enderecosEntregaRequest()));
         return cliente;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) { return true; }
+        if (obj == null || Hibernate.getClass(this) != Hibernate.getClass(obj)) { return false; }
+        var cliente = (Cliente) obj;
+        return id != null && Objects.equals(id, cliente.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

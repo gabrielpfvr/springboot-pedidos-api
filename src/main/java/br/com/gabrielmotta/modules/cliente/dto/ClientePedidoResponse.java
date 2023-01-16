@@ -1,12 +1,14 @@
 package br.com.gabrielmotta.modules.cliente.dto;
 
 import br.com.gabrielmotta.modules.cliente.model.Cliente;
+import lombok.Builder;
 
 import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Builder
 public record ClientePedidoResponse(Integer id, String nome, String cpf, String email, String telefone) {
 
     public static ClientePedidoResponse of(Cliente cliente) {

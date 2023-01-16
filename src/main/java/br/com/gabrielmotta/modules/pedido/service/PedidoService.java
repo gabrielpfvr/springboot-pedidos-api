@@ -1,6 +1,6 @@
 package br.com.gabrielmotta.modules.pedido.service;
 
-import br.com.gabrielmotta.modules.comum.exception.ValidationException;
+import br.com.gabrielmotta.modules.comum.exception.NotFoundException;
 import br.com.gabrielmotta.modules.pedido.dto.PedidoRequest;
 import br.com.gabrielmotta.modules.pedido.dto.PedidoResponse;
 import br.com.gabrielmotta.modules.pedido.model.Pedido;
@@ -11,19 +11,18 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
 
-    private static final ValidationException PEDIDO_NAO_ENCONTRADO =
-        new ValidationException("Pedido não encontrado.");
+    private static final NotFoundException PEDIDO_NAO_ENCONTRADO = new NotFoundException("Pedido não encontrado.");
+
     @Autowired
     private PedidoRepository repository;
 
     public List<PedidoResponse> findAll() {
         return repository.findAll().stream().map(PedidoResponse::of)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private Pedido findById(Integer id) {
@@ -43,7 +42,6 @@ public class PedidoService {
     public void update(Integer id, PedidoRequest request) {
         var pedido = findById(id);
         BeanUtils.copyProperties(Pedido.of(request), pedido, "id");
-        repository.save(pedido);
     }
 
     public void delete(Integer id) {

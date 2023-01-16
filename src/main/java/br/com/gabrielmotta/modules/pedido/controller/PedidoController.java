@@ -3,7 +3,6 @@ package br.com.gabrielmotta.modules.pedido.controller;
 import br.com.gabrielmotta.modules.pedido.dto.PedidoRequest;
 import br.com.gabrielmotta.modules.pedido.dto.PedidoResponse;
 import br.com.gabrielmotta.modules.pedido.service.PedidoService;
-import br.com.gabrielmotta.modules.pedido.service.RabbitMqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,6 @@ public class PedidoController {
 
     @Autowired
     private PedidoService service;
-    @Autowired
-    private RabbitMqService rabbitmqService;
 
     @GetMapping
     public List<PedidoResponse> getAll() {

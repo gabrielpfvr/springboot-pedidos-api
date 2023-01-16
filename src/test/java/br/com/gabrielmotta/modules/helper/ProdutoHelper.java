@@ -1,6 +1,7 @@
 package br.com.gabrielmotta.modules.helper;
 
 import br.com.gabrielmotta.modules.produto.dto.ProdutoRequest;
+import br.com.gabrielmotta.modules.produto.dto.ProdutoResponse;
 import br.com.gabrielmotta.modules.produto.model.Produto;
 
 public class ProdutoHelper {
@@ -18,5 +19,9 @@ public class ProdutoHelper {
             .descricao("Produto")
             .preco(2000.0)
             .build();
+    }
+
+    public static ProdutoResponse produtoResponse(Integer id) {
+        return ProdutoResponse.of(produto(id));
     }
 }

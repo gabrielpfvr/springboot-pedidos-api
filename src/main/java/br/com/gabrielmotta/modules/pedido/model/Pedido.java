@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -60,7 +59,7 @@ public class Pedido {
         return Pedido.builder()
             .dataCriacao(LocalDateTime.now())
             .cliente(new Cliente(request.clienteId()))
-            .produtos(request.produtosIds().stream().map(Produto::new).collect(Collectors.toList()))
+            .produtos(request.produtosIds().stream().map(Produto::new).toList())
             .enderecoEntregaId(request.enderecoEntregaId())
             .statusPedido(EStatusPedido.CRIADO)
             .build();

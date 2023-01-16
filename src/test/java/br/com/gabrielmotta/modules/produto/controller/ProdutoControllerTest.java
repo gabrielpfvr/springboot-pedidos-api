@@ -4,8 +4,6 @@ import br.com.gabrielmotta.modules.comum.exception.NotFoundException;
 import br.com.gabrielmotta.modules.produto.dto.ProdutoRequest;
 import br.com.gabrielmotta.modules.produto.dto.ProdutoResponse;
 import br.com.gabrielmotta.modules.produto.service.ProdutoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,19 +12,21 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.IOException;
 import java.util.List;
 
 import static br.com.gabrielmotta.modules.helper.ProdutoHelper.produto;
 import static br.com.gabrielmotta.modules.helper.ProdutoHelper.produtoRequest;
+import static br.com.gabrielmotta.modules.helper.TestHelper.convertObjectToJsonBytes;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@DirtiesContext
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -151,11 +151,5 @@ class ProdutoControllerTest {
             .andExpect(content().string("{\"message\":\"Produto nÃ£o encontrado!\",\"field\":null}"));
 
         verify(service).delete(1);
-    }
-
-    private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-        var mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        return mapper.writeValueAsBytes(object);
     }
 }

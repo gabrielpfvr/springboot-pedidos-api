@@ -11,7 +11,6 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -28,7 +27,7 @@ public record PedidoResponse(Integer id, LocalDateTime dataCriacao, ClientePedid
             pedido.getProdutos()
                 .stream()
                 .map(ProdutoResponse::of)
-                .collect(Collectors.toList()),
+                .toList(),
             pedido.getEnderecoEntrega(),
             pedido.getStatusPedido(),
             pedido.getProdutos()
