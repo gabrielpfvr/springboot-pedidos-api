@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ErrorDetails {
 
-	private String message;
-	private String field;
+    private String message;
+    private String field;
 
-	public ErrorDetails(String message) {
-		this.message = message;
-	}
+    public ErrorDetails(String message) {
+        this.message = message;
+    }
 }

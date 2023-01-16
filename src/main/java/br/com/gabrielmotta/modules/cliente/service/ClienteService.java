@@ -20,8 +20,6 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    private static final ValidationException CPF_JA_CADASTRADO =
-            new ValidationException("Já existe um cliente cadastrado com esse CPF!");
     private static final NotFoundException CLIENTE_NAO_ENCONTRADO = new NotFoundException("Cliente não encontrado!");
 
     @Autowired
@@ -68,7 +66,7 @@ public class ClienteService {
 
     private void validarCpfExistente(ClienteRequest request) {
         if (clienteRepository.existsByCpf(request.cpf())) {
-            throw CPF_JA_CADASTRADO;
+            throw new ValidationException("Já existe um cliente cadastrado com esse CPF!");
         }
     }
 }

@@ -17,32 +17,32 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ExceptionHandlerController {
 
-	@ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public List<ErrorDetails> validationError(Exception ex) {
-		BindingResult result;
-		if (ex instanceof MethodArgumentNotValidException) {
-			result = ((MethodArgumentNotValidException) ex).getBindingResult();
-		} else {
-			result = ((BindException) ex).getBindingResult();
-		}
-		return result.getFieldErrors()
-				.stream()
-				.map(err ->
-						new ErrorDetails(String.format("O campo %s %s", err.getField(), err.getDefaultMessage()), err.getField())
-				)
-				.collect(Collectors.toList());
-	}
-	
-	@ExceptionHandler(NotFoundException.class)
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public ErrorDetails notFoundException(NotFoundException ex) {
-		return new ErrorDetails(ex.getMessage());
-	}
+    @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<ErrorDetails> validationError(Exception ex) {
+        BindingResult result;
+        if (ex instanceof MethodArgumentNotValidException) {
+            result = ((MethodArgumentNotValidException) ex).getBindingResult();
+        } else {
+            result = ((BindException) ex).getBindingResult();
+        }
+        return result.getFieldErrors()
+            .stream()
+            .map(err ->
+                new ErrorDetails(String.format("O campo %s %s", err.getField(), err.getDefaultMessage()), err.getField())
+            )
+            .collect(Collectors.toList());
+    }
 
-	@ExceptionHandler(ValidationException.class)
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public ErrorDetails validationException(ValidationException ex) {
-		return new ErrorDetails(ex.getMessage());
-	}
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorDetails notFoundException(NotFoundException ex) {
+        return new ErrorDetails(ex.getMessage());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorDetails validationException(ValidationException ex) {
+        return new ErrorDetails(ex.getMessage());
+    }
 }

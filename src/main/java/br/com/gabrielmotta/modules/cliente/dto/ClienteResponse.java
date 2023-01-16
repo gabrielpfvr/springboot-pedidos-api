@@ -14,20 +14,20 @@ public record ClienteResponse(Integer id, String nome, String cpf, String email,
 
     public static ClienteResponse of(Cliente cliente) {
         return new ClienteResponse(
-                cliente.getId(),
-                cliente.getNome(),
-                cliente.getCpf(),
-                cliente.getEmail(),
-                cliente.getTelefone(),
-                EnderecoResponse.of(cliente.getEnderecosEntrega())
+            cliente.getId(),
+            cliente.getNome(),
+            cliente.getCpf(),
+            cliente.getEmail(),
+            cliente.getTelefone(),
+            EnderecoResponse.of(cliente.getEnderecosEntrega())
         );
     }
 
     public static List<ClienteResponse> of(List<Cliente> cliente) {
         return !isEmpty(cliente)
-                ? cliente.stream()
-                    .map(ClienteResponse::of)
-                    .toList()
-                : Collections.emptyList();
+            ? cliente.stream()
+            .map(ClienteResponse::of)
+            .toList()
+            : Collections.emptyList();
     }
 }
