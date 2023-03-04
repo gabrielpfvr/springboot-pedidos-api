@@ -10,7 +10,7 @@ mvn clean install -DskipTests
 ```
 Para compilar o projeto e rodar os testes:
 ```
-mvn clean install -DskipTests
+mvn clean install
 ```
 Para iniciar a aplicação:
 ```
